@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    ngrinder: agent
+  name: agent
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      ngrinder: agent
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        ngrinder: agent
+    spec:
+      containers:
+      - image: ngrinder/agent:3.4.4
+        name: agent
+        resources: {}
+        volumeMounts:
+        - mountPath: /opt/ngrinder-agent
+          name: agent-claim0
+      restartPolicy: Always
+      volumes:
+      - name: agent-claim0
+        emptyDir: {}
+status: {}
